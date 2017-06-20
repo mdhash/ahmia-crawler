@@ -16,7 +16,7 @@ control_char_re = re.compile('[%s]' % re.escape(control_chars))
 
 def remove_control_chars(s):
     """ Returns a string without non-printable characters like \n \r \t """
-    return control_char_re.sub('', s)
+    return control_char_re.sub(' ', s)
 
 class DocumentItem(Item):
     """
@@ -32,6 +32,10 @@ class DocumentItem(Item):
     Updated_on is the datetime of the last update.
     """
     url = Field(output_processor=TakeFirst())
+    h1 = Field(output_processor=TakeFirst())
+    raw_title = Field(output_processor=TakeFirst())
+    raw_url = Field(output_processor=TakeFirst())
+    raw_text = Field(output_processor=TakeFirst())
     title = Field(input_processor=MapCompose(remove_control_chars),
                   output_processor=TakeFirst())
     meta = Field(input_processor=MapCompose(remove_control_chars),
